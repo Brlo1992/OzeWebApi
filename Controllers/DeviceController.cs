@@ -21,7 +21,7 @@ namespace OzeApi.Controllers
         [Route("all")]
         public async Task<IActionResult> All()
         {
-            var result = await mongoContext.Set("OzeMonitor", "Devices").GetAll<DeviceViewModel>();
+            var result = await mongoContext.Set("Main", "Devices").GetAll<DeviceViewModel>();
 
             Debug.WriteLine(result.ToString());
 
@@ -32,7 +32,7 @@ namespace OzeApi.Controllers
         [Route("single")]
         public async Task<IActionResult> Single([FromQuery]string objectId)
         {
-            var result = await mongoContext.Set("OzeMonitor", "Devices").GetSingle<DeviceViewModel>(objectId);
+            var result = await mongoContext.Set("Main", "Devices").GetSingle<DeviceViewModel>(objectId);
 
             Debug.WriteLine(result.ToString());
 
@@ -42,7 +42,7 @@ namespace OzeApi.Controllers
         [HttpPut]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody] DeviceViewModel viewModel){
-            await mongoContext.Set("OzeMonitor", "Devices").Add<DeviceViewModel>(viewModel);
+            await mongoContext.Set("Main", "Devices").Add<DeviceViewModel>(viewModel);
 
             return Ok();
         }
@@ -50,7 +50,7 @@ namespace OzeApi.Controllers
         [HttpDelete]
         [Route("remove")]
         public async Task<IActionResult> Remove([FromQuery] string objectId){
-            await mongoContext.Set("OzeMonitor", "Devices").Remove<DeviceViewModel>(objectId);   
+            await mongoContext.Set("Main", "Devices").Remove<DeviceViewModel>(objectId);   
 
             return Ok();
         }

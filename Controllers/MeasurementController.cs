@@ -34,7 +34,7 @@ namespace OzeApi.Controllers
         [Route("add")]
         public async Task<IActionResult> Add([FromBody]AddMeasurementViewModel viewModel)
         {
-            var device = await mongoContext.Set("OzeMonitor", "Devices").GetSingle<DeviceViewModel>(viewModel.ObjectId);
+            var device = await mongoContext.Set("Main", "Devices").GetSingle<DeviceViewModel>(viewModel.ObjectId);
 
             if (device != null && viewModel.Measurements != null)
             {
@@ -47,7 +47,7 @@ namespace OzeApi.Controllers
                     device.Measurements = new List<MeasurementViewModel> { viewModel.Measurements };
                 }
 
-                await mongoContext.Set("OzeMonitor", "Devices").Update<DeviceViewModel>(viewModel.ObjectId, device);
+                await mongoContext.Set("Main", "Devices").Update<DeviceViewModel>(viewModel.ObjectId, device);
             }
 
             return Ok();
