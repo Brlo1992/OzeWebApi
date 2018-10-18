@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using OzeContract.Databases;
 using OzeContract.ViewModels;
 
@@ -21,7 +23,9 @@ namespace OzeApi.Controllers
         [Route("all")]
         public async Task<IActionResult> All()
         {
-            var result = await mongoContext.Set("Main", "Devices").GetAll<DeviceViewModel>();
+            var rawResult = await mongoContext.Set("Main", "Devices").GetAll<DeviceViewModel>();
+
+            var result = rawResult.Select(x => new ShowDeviceViewModel(x));
 
             Debug.WriteLine(result.ToString());
 
@@ -44,15 +48,35 @@ namespace OzeApi.Controllers
         public async Task<IActionResult> Add([FromBody] DeviceViewModel viewModel){
             await mongoContext.Set("Main", "Devices").Add<DeviceViewModel>(viewModel);
 
-            return Ok();
+            return Ok(new {
+                message = "Device has been added"
+            });
         }
 
         [HttpDelete]
         [Route("remove")]
-        public async Task<IActionResult> Remove([FromQuery] string objectId){
-            await mongoContext.Set("Main", "Devices").Remove<DeviceViewModel>(objectId);   
+        public async Task<IActionResult> Remove([FromBody] IdViewModel viewModel){
 
-            return Ok();
+            if(viewModel != null){
+                await mongoContext.Set("Main", "Devices").Remove<DeviceViewModel>(viewModel.Id);   
+            }
+
+            return Ok(new {
+                message = "Device has been removed"
+            });
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> Update([FromBody] EditedDeviceViewModel viewModel){
+        
+            if(viewModel != null){
+                await mongoContext.Set("Main", "Devices").Update<EditedDeviceViewModel>(viewModel.Id, viewModel);   
+            }
+
+            return Ok(new {
+                message = "Device has been removed"
+            });
         }
     }
 }
