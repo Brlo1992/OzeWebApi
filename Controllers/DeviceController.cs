@@ -45,37 +45,47 @@ namespace OzeApi.Controllers
 
         [HttpPut]
         [Route("add")]
-        public async Task<IActionResult> Add([FromBody] DeviceViewModel viewModel){
+        public async Task<IActionResult> Add([FromBody] DeviceViewModel viewModel)
+        {
             await mongoContext.Set("Main", "Devices").Add<DeviceViewModel>(viewModel);
 
-            return Ok(new {
+            return Ok(new
+            {
                 message = "Device has been added"
             });
         }
 
         [HttpDelete]
         [Route("remove")]
-        public async Task<IActionResult> Remove([FromBody] IdViewModel viewModel){
+        public async Task<IActionResult> Remove([FromBody] IdViewModel viewModel)
+        {
 
-            if(viewModel != null){
-                await mongoContext.Set("Main", "Devices").Remove<DeviceViewModel>(viewModel.Id);   
+            if (viewModel != null)
+            {
+                await mongoContext.Set("Main", "Devices").Remove<DeviceViewModel>(viewModel.Id);
             }
 
-            return Ok(new {
+            return Ok(new
+            {
                 message = "Device has been removed"
             });
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> Update([FromBody] EditedDeviceViewModel viewModel){
-        
-            if(viewModel != null){
-                await mongoContext.Set("Main", "Devices").Update<EditedDeviceViewModel>(viewModel.Id, viewModel);   
+        public async Task<IActionResult> Update([FromBody] EditedDeviceViewModel viewModel)
+        {
+
+            var device = new DeviceViewModel(viewModel);
+
+            if (device != null)
+            {
+                await mongoContext.Set("Main", "Devices").Update<DeviceViewModel>(viewModel.Id, device);
             }
 
-            return Ok(new {
-                message = "Device has been removed"
+            return Ok(new
+            {
+                message = "Device has been updated"
             });
         }
     }

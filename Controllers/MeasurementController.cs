@@ -30,6 +30,21 @@ namespace OzeApi.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("getForDevice")]
+        public async Task<IActionResult> GetForDevice([FromQuery]string id)
+        {
+            var device = await mongoContext.Set("Main", "Devices").GetSingle<DeviceViewModel>(id);
+
+            IEnumerable<MeasurementViewModel> measurements = new List<MeasurementViewModel>();
+
+            if (device != null)
+            {
+                measurements = device.Measurements;
+            }
+
+            return Ok(measurements);
+        }
         [HttpPut]
         [Route("add")]
         public async Task<IActionResult> Add([FromBody]AddMeasurementViewModel viewModel)
