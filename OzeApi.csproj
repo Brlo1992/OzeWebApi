@@ -19,11 +19,4 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.1.0-preview1-final" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OzeCommon\OzeCommon.csproj" />
-    <ProjectReference Include="..\OzeCommuncation\OzeCommuncation.csproj" />
-    <ProjectReference Include="..\OzeContract\OzeContract.csproj" />
-    <ProjectReference Include="..\OzeDatabase\OzeDatabase.csproj" />
-  </ItemGroup>
-
 </Project>
