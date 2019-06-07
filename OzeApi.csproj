@@ -20,9 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OzeDatabase\OzeDatabase.csproj" />
-    <ProjectReference Include="..\OzeContract\OzeContract.csproj" />
     <ProjectReference Include="..\OzeCommon\OzeCommon.csproj" />
+    <ProjectReference Include="..\OzeCommuncation\OzeCommuncation.csproj" />
+    <ProjectReference Include="..\OzeContract\OzeContract.csproj" />
+    <ProjectReference Include="..\OzeDatabase\OzeDatabase.csproj" />
   </ItemGroup>
 
 </Project>

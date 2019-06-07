@@ -38,7 +38,7 @@ namespace OzeApi.Controllers
 
             IEnumerable<MeasurementViewModel> measurements = new List<MeasurementViewModel>();
 
-            if (device != null)
+            if (device != null && device.Measurements != null)
             {
                 measurements = device.Measurements;
             }
